@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Finance Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/description.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Finance Manager</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="card-left">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="App Logo">
+            </div>
+            <div class="card-right">
+                <h1>Manage Your Finances Effortlessly</h1>
+                <p>Track expenses, manage bills, and gain insights—all in one place!</p>
+            </div>
+        </section>
+
+        <!-- Description Section -->
+        <section class="description">
+            <h2>About the Finance Management System</h2>
+            <p>
+                Our Finance Management System is designed to help individuals and businesses stay on top of their financial goals.
+                With intuitive tools for tracking expenses, managing bills, and visualizing financial data, you can make smarter financial decisions effortlessly.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Key Features</h2>
+            <div class="feature-cards">
+                <div class="feature-card

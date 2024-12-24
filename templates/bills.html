@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bills.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} flash-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="bills-section">
+        <h2>Manage Your Bills</h2>
+        <button class="add-new-btn" onclick="openAddBillModal()">
+            <i class="fa fa-plus"></i> Add New Bill
+        </button>
+
+        <div id="addBillModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddBillModal()">&times;</span>
+                <h2>Add New Bill</h2>
+                <form action="/add_bill" method="POST">
+                    <label for="bill_name">Bill Name:</label>
+                    <input type="text" id="bill_name" name="bill_name" required>
+
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Subscriptions">Subscriptions</option>
+                        <option value="Miscellaneous">Miscellaneous</option>
+                    </select>
+
+                    <label for="due_date">Due Date:</label>
+                    <input type="date" id="due_date" name="due_date" required>
+
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" name="amount" step="0.01" required>
+
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+
+                    <button type="submit" class="add-new-btn">Add Bill</button>
+                </form>
+            </div>
+        </div>
+
+        <table class="bills-table">
+            <thead>
+                <tr>
+                    <th>Bill Name</th>
+                    <th>Category</th>
+                    <th>Due Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr class="bill-row" data-status="{{ bill.status }}">
+                    <td>{{ bill.name }}</td>
+                    <td>{{ bill.category }}</td>
+                    <td>{{ bill.due_date }}</td>
+                    <td>${{ bill.amount }}</td>
+                    <td class="{% if bill.status == 'Paid' %}status-paid{% else %}status-unpaid{% endif %}">
+                        {{ bill.status }}
+                        {% if bill.status == 'Unpaid' %}
+                        <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr class="dropdown-row">
+                    <td colspan="5">
+                        <p><strong>Description:</strong> {{ bill.description or 'No description available.' }}</p>
+
+                        {% if bill.status == 'Unpaid' %}
+                        <button class="pay-btn" onclick="openPayBillModal('{{ bill.bill_id }}', '{{ bill.name }}', '{{ bill.amount }}', '{{ bill.due_date }}')">
+                            Pay Bill
+                        </button>
+                        {% else %}
+                            <span class="paid-message">This bill has been paid</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="payBillModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePayBillModal()">&times;</span>
+            <h2>Pay Bill</h2>
+            <form id="payBillForm" action="" method="POST">
+            <!-- Hidden field for bill_id -->
+                <input type="hidden" id="bill_id" name="bill_id">
+
+            <!-- Bill details preview -->
+                <div>
+                    <h3>Bill Details</h3>
+                    <p><strong>Bill Name:</strong> <span id="billNamePreview"></span></p>
+                    <p><strong>Amount:</strong> $<span id="billAmountPreview"></span></p>
+                    <p><strong>Due Date:</strong> <span id="billDueDatePreview"></span></p>
+                </div>
+
+            <!-- Account selection -->
+                <label for="account_id">Select Account:</label>
+                <select id="account_id" name="account_id" required>
+                    {% for account in accounts %}
+                        <option value="{{ account.id }}">{{ account.cardholder_name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="payment_date">Payment Date:</label>
+                <input type="date" id="payment_date" name="payment_date" required>
+
+                <button type="submit" class="add-new-btn">Pay Bill</button>
+            </form>
+        </div>
+    </div>
+
+
+    
+
+
+
+    <script>
+        function openAddBillModal() {
+            var modal = document.getElementById("addBillModal");
+            modal.style.display = "block";
+        }
+
+        function closeAddBillModal() {
+            var modal = document.getElementById("addBillModal");
+            modal.style.display = "none";
+        }
+
+        // Function to open the Pay Bill modal and display bill details
+        // Function to open the Pay Bill modal and display bill details
+function openPayBillModal(billId, billName, billAmount, dueDate) {
+    console.log("Bill ID:", billId);
+    var modal = document.getElementById("payBillModal");
+
+    // Set the bill ID, amount, name, and due date in the form and preview
+    document.getElementById("bill_id").value = billId; // Hidden input for bill_id
+    document.getElementById("billNamePreview").textContent = billName; // Bill name preview
+    document.getElementById("billAmountPreview").textContent = billAmount; // Bill amount preview
+    document.getElementById("billDueDatePreview").textContent = dueDate; // Due date preview
+
+    // Update the form action to include the correct bill_id
+    document.getElementById("payBillForm").action = "/pay_bill/" + billId;
+
+    // Open the modal
+    modal.style.display = "block";
+}
+
+
+
+        // Function to close the Pay Bill modal
+        function closePayBillModal() {
+            var modal = document.getElementById("payBillModal");
+            modal.style.display = "none";
+        }
+
+        function toggleDropdown(event) {
+    const row = event.target.closest('tr'); // Get the clicked row
+    const dropdownRow = row.nextElementSibling; // Get the dropdown row (next row)
+    if (dropdownRow && dropdownRow.classList.contains('dropdown-row')) {
+        // Toggle the display of the dropdown row
+        dropdownRow.style.display = (dropdownRow.style.display === 'none' || dropdownRow.style.display === '') ? 'table-row' : 'none';
+    }
+}
+
+window.onload = function () {
+    // Add click event listeners to all dropdown icons
+    const dropdownIcons = document.querySelectorAll('.dropdown-icon');
+    dropdownIcons.forEach(icon => {
+        icon.addEventListener('click', toggleDropdown);
+    });
+
+    // Hide flash messages after 3 seconds
+    setTimeout(() => {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(message => (message.style.display = 'none'));
+    }, 3000);
+};
+
+        // Function to handle closing modal when clicked outside of it
+window.onclick = function(event) {
+    var addBillModal = document.getElementById("addBillModal");
+    var payBillModal = document.getElementById("payBillModal");
+    if (event.target == addBillModal) {
+        addBillModal.style.display = "none";
+    } else if (event.target == payBillModal) {
+        payBillModal.style.display = "none";
+    }
+}
+
+// Function to close the Pay Bill modal
+function closePayBillModal() {
+    var modal = document.getElementById("payBillModal");
+    modal.style.display = "none";
+}
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,336 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Styles */
+body {
+    background-color: #e5e9ec;
+    padding: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    font-size: 36px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    letter-spacing: 0.5px;
+}
+
+h3 {
+    font-size: 22px;
+    letter-spacing: 0.3px;
+}
+
+h1, h2, h3 {
+    padding: 10px;
+}
+
+/* Buttons */
+button, .add-new-btn, .pay-btn {
+    background-color: #331e7d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .add-new-btn:hover, .pay-btn:hover {
+    background-color: #0056b3;
+}
+
+.add-new-btn i {
+    margin-right: 5px;
+}
+
+/* Overview Section */
+.bills-overview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.overview-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1 1 calc(25% - 20px);
+    min-width: 200px;
+}
+
+.overview-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.overview-card p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Bills Section */
+.bills-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* Bills Table */
+.bills-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.bills-table th, .bills-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.bills-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.bill-row {
+    cursor: pointer;
+}
+
+.bill-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status Styles */
+.status-overdue {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.status-paid {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-unpaid {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Dropdown Rows */
+.dropdown-row {
+    display: none;
+    background-color: #f9f9f9;
+}
+
+.dropdown-row.show {
+    display: table-row;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+/* Form Styles */
+form label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #555;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .bills-overview {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .overview-card {
+        width: 100%;
+    }
+
+    .bills-table th, .bills-table td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    button, .add-new-btn, .pay-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+
+.flash-messages {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.flash-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    animation: slide-down 0.5s ease-out;
+}
+
+/* Specific styles for message categories */
+.flash-message.success {
+    border-left: 5px solid #28a745;
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-message.danger {
+    border-left: 5px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash-message.info {
+    border-left: 5px solid #17a2b8;
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.flash-message.warning {
+    border-left: 5px solid #ffc107;
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Close button styling */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Animation for sliding down */
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

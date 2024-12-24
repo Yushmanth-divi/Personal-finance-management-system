@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/expenses.css') }}">
+    <Style>
+        /* static/css/expenses.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+    </Style>
+</head>
+<body>
+    <header class="header">
+        <h1>Expenses Analysis</h1>
+    </header>
+
+    <div class="container">
+        <h2>Expenses Overview</h2>
+        <img src="data:image/png;base64,{{ chart_img }}" alt="Expenses Chart">
+
+    </div>
+</body>
+</html>
